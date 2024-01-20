@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import pollub.cs.ptrwrbl.receptionist.entities.Reservation;
 
 @Repository
-public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
+public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 }

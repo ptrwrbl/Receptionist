@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import pollub.cs.ptrwrbl.receptionist.entities.Room;
 
 @Repository
-public interface RoomRepository extends JpaRepository<Room, Integer> {
+public interface RoomRepository extends JpaRepository<Room, Long> {
 }
