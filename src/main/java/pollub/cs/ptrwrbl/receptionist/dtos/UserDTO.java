@@ -1,8 +1,6 @@
 package pollub.cs.ptrwrbl.receptionist.dtos;
 
-import jakarta.persistence.Column;
 import lombok.*;
-import net.minidev.json.annotate.JsonIgnore;
 
 @Getter
 @Setter
