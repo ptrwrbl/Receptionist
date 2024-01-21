@@ -1,6 +1,7 @@
 package pollub.cs.ptrwrbl.receptionist.models;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.io.Serial;
 import java.io.Serializable;

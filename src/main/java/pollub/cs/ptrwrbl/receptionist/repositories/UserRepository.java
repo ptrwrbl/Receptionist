@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import pollub.cs.ptrwrbl.receptionist.entities.User;
 
 @Repository
-public interface UserRepository extends CrudRepository<User, Integer> {
+public interface UserRepository extends CrudRepository<User, Long> {
     User findByUsername(String username);
 }

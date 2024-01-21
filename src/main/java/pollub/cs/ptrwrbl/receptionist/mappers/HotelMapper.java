@@ -10,5 +10,5 @@ public interface HotelMapper {
     HotelDTO hotelToHotelDTO(Hotel hotel);
 
     @Mapping(target = "rooms", ignore = true)
-    Hotel hotelDTOToHotel (HotelDTO dto);
+    Hotel hotelDTOToHotel(HotelDTO dto);
 }

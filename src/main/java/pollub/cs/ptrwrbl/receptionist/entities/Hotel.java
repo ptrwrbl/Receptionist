@@ -1,6 +1,7 @@
 package pollub.cs.ptrwrbl.receptionist.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,20 +21,24 @@ public class Hotel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Name cannot be empty")
+    @Size(min = 3, max = 255, message = "Name must be between 3 and 255 characters")
     @Column
-    @Size(min = 2, max = 50)
     private String name;
 
+    @NotBlank(message = "Location cannot be empty")
+    @Size(min = 5, max = 255, message = "Location must be between 5 and 255 characters")
     @Column
-    @Size(min = 2, max = 50)
     private String location;
 
+    @NotBlank(message = "Description cannot be empty")
+    @Size(min = 100, max = 5000, message = "Description must be between 100 and 5000 characters")
     @Column
-    @Size(min = 2, max = 100)
     private String description;
 
+    @NotBlank(message = "Image cannot be empty")
+    @Size(min = 20, max = 100, message = "Image URL must be between 20 and 100 characters")
     @Column
-    @Size(min = 2, max = 50)
     private String image;
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
