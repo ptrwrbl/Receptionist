@@ -2,11 +2,11 @@ package pollub.cs.ptrwrbl.receptionist.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pollub.cs.ptrwrbl.receptionist.dtos.UserDTO;
 import pollub.cs.ptrwrbl.receptionist.entities.User;
+import pollub.cs.ptrwrbl.receptionist.exceptions.UserNotFoundException;
 import pollub.cs.ptrwrbl.receptionist.repositories.UserRepository;
 
 import java.util.ArrayList;
@@ -19,13 +19,14 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder bcryptEncoder;
 
     @Override
-    public UserDetails loadUserByUsername(String username)
-            throws UsernameNotFoundException {
-        User user = userRepo.findByUsername(username);
-        if (user == null) {
-            throw new
-                    UsernameNotFoundException("User not found with username: " + username);
-        }
+    public User findByUsername(String username) {
+        return userRepo.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException(username));
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) {
+        User user = findByUsername(username);
         return new org.springframework.security.core.userdetails.User(user.getUsername(),
                 user.getPassword(), new ArrayList<>());
     }

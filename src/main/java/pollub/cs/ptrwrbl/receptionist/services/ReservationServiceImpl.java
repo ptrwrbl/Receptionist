@@ -58,7 +58,7 @@ public class ReservationServiceImpl implements ReservationService {
         Room room = roomRepository.findById(reservationDTO.getRoomId())
                 .orElseThrow(() -> new RoomNotFoundException(reservationDTO.getRoomId()));
         User user = userRepository.findById(reservationDTO.getUserId())
-                .orElseThrow(() -> new UserNotFoundException(reservationDTO.getUserId()));
+                .orElseThrow(() -> new UserNotFoundException(reservationDTO.getUserId().toString()));
 
         Reservation reservation = reservationMapper.reservationDTOToReservation(reservationDTO);
         reservation.setRoom(room);
@@ -87,7 +87,7 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setRoom(room);
 
         User user = userRepository.findById(reservationDTO.getUserId())
-                .orElseThrow(() -> new UserNotFoundException(reservationDTO.getUserId()));
+                .orElseThrow(() -> new UserNotFoundException(reservationDTO.getUserId().toString()));
         reservation.setUser(user);
 
         reservationRepository.save(reservation);

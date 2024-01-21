@@ -11,13 +11,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
 public class FileStorageServiceImpl implements FileStorageService {
-    private static final String UPLOAD_FOLDER = "/assets";
+    private static final String UPLOAD_FOLDER = "assets";
     private static final long MAX_FILE_SIZE = 10 * 1024 * 1024;
     @Override
     public String store(MultipartFile file) {
@@ -25,14 +26,13 @@ public class FileStorageServiceImpl implements FileStorageService {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
 
         try {
-            String mimeType = Files.probeContentType(file.getResource().getFile().toPath());
-
-            if (!mimeType.equals("image/jpeg") && !mimeType.equals("image/png")) {
-                throw new FileStorageException(" Only jpg and png files are allowed.");
+            String fileExtension = StringUtils.getFilenameExtension(fileName).toLowerCase();
+            if (!Arrays.asList("jpg", "png").contains(fileExtension)) {
+                throw new FileStorageException("Only jpg and png files are allowed.");
             }
 
             if (file.getSize() > MAX_FILE_SIZE) {
-                throw new FileStorageException("SFile size must be less than 10MB.");
+                throw new FileStorageException("File size must be less than 10MB.");
             }
 
             if(fileName.contains("..")) {
@@ -47,6 +47,7 @@ public class FileStorageServiceImpl implements FileStorageService {
                 targetLocation = Paths.get(UPLOAD_FOLDER).resolve(uniqueFileName);
             } while (Files.exists(targetLocation));
 
+            // Use getInputStream() instead of getFile()
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
             return uniqueFileName;

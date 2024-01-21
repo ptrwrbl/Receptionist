@@ -5,5 +5,6 @@ import pollub.cs.ptrwrbl.receptionist.dtos.UserDTO;
 import pollub.cs.ptrwrbl.receptionist.entities.User;
 
 public interface UserService extends UserDetailsService {
+    User findByUsername(String username);
     User save(UserDTO user);
 }

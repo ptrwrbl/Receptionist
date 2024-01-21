@@ -1,13 +1,18 @@
 package pollub.cs.ptrwrbl.receptionist.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pollub.cs.ptrwrbl.receptionist.config.JwtTokenUtil;
 import pollub.cs.ptrwrbl.receptionist.dtos.ReservationDTO;
+import pollub.cs.ptrwrbl.receptionist.entities.User;
 import pollub.cs.ptrwrbl.receptionist.exceptions.ReservationNotFoundException;
 import pollub.cs.ptrwrbl.receptionist.services.ReservationServiceImpl;
+import pollub.cs.ptrwrbl.receptionist.services.UserServiceImpl;
 
 import java.util.List;
 
@@ -16,10 +21,22 @@ import java.util.List;
 @RestController
 public class ReservationController {
     private final ReservationServiceImpl reservationService;
+    private final UserServiceImpl userService;
+
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
     @GetMapping
     public ResponseEntity<List<ReservationDTO>> getAll() {
         return new ResponseEntity<>(reservationService.getAll(), HttpStatus.OK);
+    }
+
+    @GetMapping("/mine")
+    public ResponseEntity<List<ReservationDTO>> getMyReservations(HttpServletRequest req) {
+        String token = req.getHeader("Authorization").substring(7);
+        String username = jwtTokenUtil.getUsernameFromToken(token);
+        User user = userService.findByUsername(username);
+        return new ResponseEntity<>(reservationService.getUsers(user.getId()), HttpStatus.OK);
     }
 
     @GetMapping("/hotel/{id}")
