@@ -26,35 +26,35 @@ public class ReservationServiceImpl implements ReservationService {
     private final ReservationMapper reservationMapper;
 
     @Override
-    public List<ReservationDTO> getAllReservations() {
+    public List<ReservationDTO> getAll() {
         return reservationRepository.findAll().stream()
                 .map(reservationMapper::reservationToReservationDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<ReservationDTO> getRoomsReservations(Long roomId) {
+    public List<ReservationDTO> getRooms(Long roomId) {
         return reservationRepository.findAllByRoomId(roomId).stream()
                 .map(reservationMapper::reservationToReservationDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<ReservationDTO> getHotelsReservations(Long hotelId) {
+    public List<ReservationDTO> getHotels(Long hotelId) {
         return reservationRepository.findAllByHotelId(hotelId).stream()
                 .map(reservationMapper::reservationToReservationDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<ReservationDTO> getUsersReservations(Long userId) {
+    public List<ReservationDTO> getUsers(Long userId) {
         return reservationRepository.findAllByUserId(userId).stream()
                 .map(reservationMapper::reservationToReservationDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public void addReservation(ReservationDTO reservationDTO) {
+    public void add(ReservationDTO reservationDTO) {
         Room room = roomRepository.findById(reservationDTO.getRoomId())
                 .orElseThrow(() -> new RoomNotFoundException(reservationDTO.getRoomId()));
         User user = userRepository.findById(reservationDTO.getUserId())
@@ -68,14 +68,14 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public ReservationDTO getReservationById(Long id) {
+    public ReservationDTO getOne(Long id) {
         return reservationRepository.findById(id)
                 .map(reservationMapper::reservationToReservationDTO)
                 .orElseThrow(() -> new ReservationNotFoundException(id));
     }
 
     @Override
-    public void updateReservation(Long id, ReservationDTO reservationDTO) {
+    public void update(Long id, ReservationDTO reservationDTO) {
         Reservation reservation = reservationRepository.findById(id).orElseThrow(() -> new ReservationNotFoundException(id));
 
         reservation.setNumOfGuests(reservationDTO.getNumOfGuests());
@@ -94,7 +94,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public void deleteReservation(Long id) {
+    public void delete(Long id) {
         Reservation reservation = reservationRepository.findById(id).orElseThrow(() -> new ReservationNotFoundException(id));
         reservationRepository.delete(reservation);
     }

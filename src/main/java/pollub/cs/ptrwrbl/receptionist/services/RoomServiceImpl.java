@@ -22,21 +22,21 @@ public class RoomServiceImpl implements RoomService {
     private final RoomMapper roomMapper;
 
     @Override
-    public List<RoomDTO> getAllRooms() {
+    public List<RoomDTO> getAll() {
         return roomRepository.findAll().stream()
                 .map(roomMapper::roomToRoomDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<RoomDTO> getHotelsRooms(Long hotelId) {
+    public List<RoomDTO> getHotels(Long hotelId) {
         return roomRepository.findAllByHotelId(hotelId).stream()
                 .map(roomMapper::roomToRoomDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public void addRoom(RoomDTO roomDTO) {
+    public void add(RoomDTO roomDTO) {
         Hotel hotel = hotelRepository.findById(roomDTO.getHotelId())
                 .orElseThrow(() -> new HotelNotFoundException(roomDTO.getHotelId()));
 
@@ -46,14 +46,14 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public RoomDTO getRoomById(Long id) {
+    public RoomDTO getOne(Long id) {
         return roomRepository.findById(id)
                 .map(roomMapper::roomToRoomDTO)
                 .orElseThrow(() -> new RoomNotFoundException(id));
     }
 
     @Override
-    public void updateRoom(Long id, RoomDTO roomDTO) {
+    public void update(Long id, RoomDTO roomDTO) {
         Room room = roomRepository.findById(id).orElseThrow(() -> new RoomNotFoundException(id));
 
         room.setName(roomDTO.getName());
@@ -69,7 +69,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public void deleteRoom(Long id) {
+    public void delete(Long id) {
         Room room = roomRepository.findById(id).orElseThrow(() -> new RoomNotFoundException(id));
         roomRepository.delete(room);
     }

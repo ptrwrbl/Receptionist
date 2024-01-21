@@ -5,13 +5,13 @@ import pollub.cs.ptrwrbl.receptionist.dtos.HotelDTO;
 import java.util.List;
 
 public interface HotelService {
-    List<HotelDTO> getAllHotels();
+    List<HotelDTO> getAll();
 
-    void addHotel(HotelDTO hotelDTO);
+    void add(HotelDTO hotelDTO);
 
-    HotelDTO getHotelById(Long id);
+    HotelDTO getOne(Long id);
 
-    void updateHotel(Long id, HotelDTO hotelDTO);
+    void update(Long id, HotelDTO hotelDTO);
 
-    void deleteHotel(Long id);
+    void delete(Long id);
 }

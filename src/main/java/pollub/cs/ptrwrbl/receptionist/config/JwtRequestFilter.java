@@ -12,14 +12,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import pollub.cs.ptrwrbl.receptionist.services.JwtUserDetailsServiceImpl;
+import pollub.cs.ptrwrbl.receptionist.services.UserServiceImpl;
 
 import java.io.IOException;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
     @Autowired
-    private JwtUserDetailsServiceImpl jwtUserDetailsService;
+    private UserServiceImpl jwtUserDetailsService;
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 

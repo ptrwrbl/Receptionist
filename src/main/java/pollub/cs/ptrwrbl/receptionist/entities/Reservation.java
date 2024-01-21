@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pollub.cs.ptrwrbl.receptionist.validation.DepartureAfterArrival;
 
 import java.time.LocalDateTime;
 
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "reservations")
+@DepartureAfterArrival
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +32,7 @@ public class Reservation {
 
     @NotNull(message = "Number of guests cannot be null")
     @Min(value = 1, message = "Number of guests must be at least 1")
-    @Max(value = 10, message = "Number of guests cannot exceed 10")
+    @Max(value = 16, message = "Number of guests cannot exceed 16")
     @Column
     private Integer numOfGuests;
 
@@ -43,9 +45,4 @@ public class Reservation {
     @Future(message = "Departure date must be in the future")
     @Column
     private LocalDateTime departure;
-
-    @AssertTrue(message = "Departure date must be after arrival date")
-    public boolean isDepartureAfterArrival() {
-        return getDeparture().isAfter(getArrival());
-    }
 }

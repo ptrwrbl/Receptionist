@@ -27,12 +27,12 @@ public class Hotel {
     private String name;
 
     @NotBlank(message = "Location cannot be empty")
-    @Size(min = 5, max = 255, message = "Location must be between 5 and 255 characters")
+    @Size(min = 3, max = 255, message = "Location must be between 5 and 255 characters")
     @Column
     private String location;
 
     @NotBlank(message = "Description cannot be empty")
-    @Size(min = 100, max = 5000, message = "Description must be between 100 and 5000 characters")
+    @Size(min = 10, max = 2000, message = "Description must be between 100 and 5000 characters")
     @Column
     private String description;
 

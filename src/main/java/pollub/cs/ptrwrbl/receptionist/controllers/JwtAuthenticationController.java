@@ -12,7 +12,7 @@ import pollub.cs.ptrwrbl.receptionist.config.JwtTokenUtil;
 import pollub.cs.ptrwrbl.receptionist.dtos.UserDTO;
 import pollub.cs.ptrwrbl.receptionist.models.JwtRequest;
 import pollub.cs.ptrwrbl.receptionist.models.JwtResponse;
-import pollub.cs.ptrwrbl.receptionist.services.JwtUserDetailsServiceImpl;
+import pollub.cs.ptrwrbl.receptionist.services.UserServiceImpl;
 
 @RestController
 @CrossOrigin
@@ -22,7 +22,7 @@ public class JwtAuthenticationController {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
     @Autowired
-    private JwtUserDetailsServiceImpl userDetailsService;
+    private UserServiceImpl userDetailsService;
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {

@@ -5,15 +5,15 @@ import pollub.cs.ptrwrbl.receptionist.dtos.RoomDTO;
 import java.util.List;
 
 public interface RoomService {
-    List<RoomDTO> getAllRooms();
+    List<RoomDTO> getAll();
 
-    List<RoomDTO> getHotelsRooms(Long hotelId);
+    List<RoomDTO> getHotels(Long hotelId);
 
-    void addRoom(RoomDTO room);
+    void add(RoomDTO room);
 
-    RoomDTO getRoomById(Long id);
+    RoomDTO getOne(Long id);
 
-    void updateRoom(Long id, RoomDTO room);
+    void update(Long id, RoomDTO room);
 
-    void deleteRoom(Long id);
+    void delete(Long id);
 }

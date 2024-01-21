@@ -18,27 +18,27 @@ public class HotelServiceImpl implements HotelService {
     private final HotelMapper hotelMapper;
 
     @Override
-    public List<HotelDTO> getAllHotels() {
+    public List<HotelDTO> getAll() {
         return hotelRepository.findAll().stream()
                 .map(hotelMapper::hotelToHotelDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public void addHotel(HotelDTO hotelDTO) {
+    public void add(HotelDTO hotelDTO) {
         Hotel hotel = hotelMapper.hotelDTOToHotel(hotelDTO);
         hotelRepository.save(hotel);
     }
 
     @Override
-    public HotelDTO getHotelById(Long id) {
+    public HotelDTO getOne(Long id) {
         return hotelRepository.findById(id)
                 .map(hotelMapper::hotelToHotelDTO)
                 .orElseThrow(() -> new HotelNotFoundException(id));
     }
 
     @Override
-    public void updateHotel(Long id, HotelDTO hotelDTO) {
+    public void update(Long id, HotelDTO hotelDTO) {
         Hotel hotel = hotelRepository.findById(id).orElseThrow(() -> new HotelNotFoundException(id));
 
         hotel.setName(hotelDTO.getName());
@@ -49,7 +49,7 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public void deleteHotel(Long id) {
+    public void delete(Long id) {
         Hotel hotel = hotelRepository.findById(id).orElseThrow(() -> new HotelNotFoundException(id));
         hotelRepository.delete(hotel);
     }
