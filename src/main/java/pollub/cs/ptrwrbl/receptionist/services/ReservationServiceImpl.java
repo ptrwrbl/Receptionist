@@ -3,6 +3,7 @@ package pollub.cs.ptrwrbl.receptionist.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pollub.cs.ptrwrbl.receptionist.dtos.ReservationDTO;
+import pollub.cs.ptrwrbl.receptionist.dtos.ReservationDetailsDTO;
 import pollub.cs.ptrwrbl.receptionist.entities.Reservation;
 import pollub.cs.ptrwrbl.receptionist.entities.Room;
 import pollub.cs.ptrwrbl.receptionist.entities.User;
@@ -26,30 +27,30 @@ public class ReservationServiceImpl implements ReservationService {
     private final ReservationMapper reservationMapper;
 
     @Override
-    public List<ReservationDTO> getAll() {
+    public List<ReservationDetailsDTO> getAll() {
         return reservationRepository.findAll().stream()
-                .map(reservationMapper::reservationToReservationDTO)
+                .map(reservationMapper::reservationToReservationDetailsDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<ReservationDTO> getRooms(Long roomId) {
+    public List<ReservationDetailsDTO> getRooms(Long roomId) {
         return reservationRepository.findAllByRoomId(roomId).stream()
-                .map(reservationMapper::reservationToReservationDTO)
+                .map(reservationMapper::reservationToReservationDetailsDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<ReservationDTO> getHotels(Long hotelId) {
+    public List<ReservationDetailsDTO> getHotels(Long hotelId) {
         return reservationRepository.findAllByHotelId(hotelId).stream()
-                .map(reservationMapper::reservationToReservationDTO)
+                .map(reservationMapper::reservationToReservationDetailsDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<ReservationDTO> getUsers(Long userId) {
+    public List<ReservationDetailsDTO> getUsers(Long userId) {
         return reservationRepository.findAllByUserId(userId).stream()
-                .map(reservationMapper::reservationToReservationDTO)
+                .map(reservationMapper::reservationToReservationDetailsDTO)
                 .collect(Collectors.toList());
     }
 
@@ -68,9 +69,9 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public ReservationDTO getOne(Long id) {
+    public ReservationDetailsDTO getOne(Long id) {
         return reservationRepository.findById(id)
-                .map(reservationMapper::reservationToReservationDTO)
+                .map(reservationMapper::reservationToReservationDetailsDTO)
                 .orElseThrow(() -> new ReservationNotFoundException(id));
     }
 

@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pollub.cs.ptrwrbl.receptionist.dtos.ReservationDTO;
+import pollub.cs.ptrwrbl.receptionist.dtos.ReservationDetailsDTO;
 import pollub.cs.ptrwrbl.receptionist.dtos.RoomDTO;
 import pollub.cs.ptrwrbl.receptionist.exceptions.RoomNotFoundException;
 import pollub.cs.ptrwrbl.receptionist.services.ReservationServiceImpl;
@@ -16,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping({"/rooms"})
 @RestController
+@CrossOrigin
 public class RoomController {
     private final RoomServiceImpl roomService;
     private final ReservationServiceImpl reservationService;
@@ -42,7 +43,7 @@ public class RoomController {
     }
 
     @GetMapping("/{id}/reservations")
-    public ResponseEntity<List<ReservationDTO>> getReservations(@PathVariable Long id) {
+    public ResponseEntity<List<ReservationDetailsDTO>> getReservations(@PathVariable Long id) {
         return new ResponseEntity<>(reservationService.getRooms(id), HttpStatus.OK);
     }
 

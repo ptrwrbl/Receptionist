@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pollub.cs.ptrwrbl.receptionist.dtos.HotelDTO;
-import pollub.cs.ptrwrbl.receptionist.dtos.ReservationDTO;
+import pollub.cs.ptrwrbl.receptionist.dtos.ReservationDetailsDTO;
 import pollub.cs.ptrwrbl.receptionist.dtos.RoomDTO;
 import pollub.cs.ptrwrbl.receptionist.exceptions.HotelNotFoundException;
 import pollub.cs.ptrwrbl.receptionist.services.HotelServiceImpl;
@@ -18,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping({"/hotels"})
 @RestController
+@CrossOrigin
 public class HotelController {
     private final HotelServiceImpl hotelService;
     private final RoomServiceImpl roomService;
@@ -45,7 +46,7 @@ public class HotelController {
     }
 
     @GetMapping("/{id}/reservations")
-    public ResponseEntity<List<ReservationDTO>> getReservations(@PathVariable Long id) {
+    public ResponseEntity<List<ReservationDetailsDTO>> getReservations(@PathVariable Long id) {
         return new ResponseEntity<>(reservationService.getHotels(id), HttpStatus.OK);
     }
 

@@ -5,13 +5,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.Map;
 
 @Getter
 @Setter
 @AllArgsConstructor
-public class ErrorDetails {
+public class DetailedErrorDetails {
     private Date timestamp;
     private int status;
-    private String message;
+    private Map<String, String> message;
     private String description;
 }

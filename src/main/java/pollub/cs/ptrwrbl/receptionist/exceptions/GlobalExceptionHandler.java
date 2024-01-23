@@ -8,10 +8,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
-import java.util.Collections;
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -20,19 +19,55 @@ public class GlobalExceptionHandler {
         ErrorDetails message = new ErrorDetails(
                 new Date(),
                 HttpStatus.NOT_FOUND.value(),
-                Collections.singletonList(ex.getMessage()),
+                ex.getMessage(),
+                request.getDescription(false));
+
+        return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(RoomNotFoundException.class)
+    public ResponseEntity<ErrorDetails> roomNotFoundHandler(RoomNotFoundException ex, WebRequest request) {
+        ErrorDetails message = new ErrorDetails(
+                new Date(),
+                HttpStatus.NOT_FOUND.value(),
+                ex.getMessage(),
+                request.getDescription(false));
+
+        return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ReservationNotFoundException.class)
+    public ResponseEntity<ErrorDetails> reservationNotFoundHandler(ReservationNotFoundException ex, WebRequest request) {
+        ErrorDetails message = new ErrorDetails(
+                new Date(),
+                HttpStatus.NOT_FOUND.value(),
+                ex.getMessage(),
+                request.getDescription(false));
+
+        return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ErrorDetails> userNotFoundHandler(UserNotFoundException ex, WebRequest request) {
+        ErrorDetails message = new ErrorDetails(
+                new Date(),
+                HttpStatus.NOT_FOUND.value(),
+                ex.getMessage(),
                 request.getDescription(false));
 
         return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<ErrorDetails> handleConstraintViolationException(ConstraintViolationException ex, WebRequest request) {
-        List<String> errors = ex.getConstraintViolations().stream()
-                .map(violation -> violation.getPropertyPath() + ":cv " + violation.getMessage())
-                .collect(Collectors.toList());
+    public ResponseEntity<DetailedErrorDetails> handleConstraintViolationException(ConstraintViolationException ex, WebRequest request) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getConstraintViolations().forEach(violation -> {
+            String propertyPath = violation.getPropertyPath().toString();
+            String errorMessage = violation.getMessage();
+            errors.put(propertyPath, errorMessage);
+        });
 
-        ErrorDetails message = new ErrorDetails(
+        DetailedErrorDetails message = new DetailedErrorDetails(
                 new Date(),
                 HttpStatus.BAD_REQUEST.value(),
                 errors,
@@ -46,7 +81,7 @@ public class GlobalExceptionHandler {
         ErrorDetails message = new ErrorDetails(
                 new Date(),
                 HttpStatus.BAD_REQUEST.value(),
-                Collections.singletonList(ex.getMessage()),
+                ex.getMessage(),
                 request.getDescription(false));
 
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
